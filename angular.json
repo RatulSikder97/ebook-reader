@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "ebook"
+  "defaultProject": "ebook",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
