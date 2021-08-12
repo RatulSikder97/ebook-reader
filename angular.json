@@ -26,6 +26,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "xmldom",
+              "event-emitter"
+           ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -109,6 +113,7 @@
   },
   "defaultProject": "ebook",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@ngrx/schematics"
   }
 }
