@@ -1,1 +1,16 @@
 <input type="file" (change) = "readBook($event)">
+
+<button (click)="makeBookmark()">Bookmark This Page</button>
+
+<ul>
+    <button *ngFor="let link of bookMark, let i =index" (click) = "goToBookMark(link.link)">
+       {{ link.name}}
+    </button>
+</ul>
+
+<div class="book">
+    <button id="prev" (click)="prevPage()">Prev</button>
+    <button id="next" (click)="nextPage()">Next</button>
+    <div id="book-view"></div>
+    
+</div>

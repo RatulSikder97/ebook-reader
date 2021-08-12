@@ -16,14 +16,16 @@ export class BookService {
 
    openBook(input: any, what?: string) {
     this.book.open(input, what);
-    console.log(this.book)
+    //console.log(this.book)
   }
 
   display(target?: string) {
     this.rendition.display(target);
   }
 
-  renderTo(element: string, options: RenditionOptions) {
-    this.rendition = this.book.renderTo(element, options);
+  renderTo(element: string, options?: RenditionOptions) {
+    this.rendition = this.book.renderTo(element, { height: 600 , width: 500});
   }
+
+  
 }
