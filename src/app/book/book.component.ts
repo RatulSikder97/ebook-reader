@@ -8,7 +8,9 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit {
-  bookMark:any[] = [];
+  bookmarkString ;
+  bookMark!: any[];
+  bookmarkLength ;
   Location;
   constructor(
     private bookService: BookService
@@ -16,8 +18,11 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
-
+    this.bookmarkString = localStorage.getItem('bookmark') && '[]';
+    console.log('lloo')
+    console.log(this.bookmarkString)
+    this.bookMark = JSON.parse(this.bookmarkString) ?? [];
+    this.bookmarkLength = this.bookMark.length
    
   }
 
@@ -78,7 +83,8 @@ export class BookComponent implements OnInit {
     let currSec = localStorage.getItem('currSec')?.trim()
     let currentPage = localStorage.getItem('currentPage')?.trim()
     let linkName = currSec+ " "+ currentPage;
-    if (l && this.bookMark.indexOf(l) == -1) {
+    console.log((  this.bookMark.length))
+    if ((l &&  this.bookMark.length == 0) || (l && this.bookMark.length>0 && this.bookMark.indexOf(l) == -1)) {
       this.bookMark.push({name: linkName, link: l});
     }
 
