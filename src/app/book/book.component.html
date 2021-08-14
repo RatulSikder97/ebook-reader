@@ -8,9 +8,21 @@
     </button>
 </ul>
 
+<ul>
+    <li *ngFor="let link of hIndex,  let i =index" (click) = "goToBookMark(link)">
+        HL-{{i}}
+
+        <button (click)="removeH(link)"> X</button>
+    </li>
+</ul>
+
 <div class="book">
     <button id="prev" (click)="prevPage()">Prev</button>
     <button id="next" (click)="nextPage()">Next</button>
     <div id="book-view"></div>
     
+</div>
+
+<div class="highlisht-color">
+    <button *ngFor="let color of hColors" [class]="'btn '+'btn-'+color" (click) = "changeHColor(color)"></button>
 </div>

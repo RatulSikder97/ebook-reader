@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+.btn{
+    padding: 15px;
+    border-radius: 50%;
+
+    
+    &-red {
+        background-color: rgb(255, 152, 152);
+    }
+
+    &-yellow {
+        background-color: rgb(250, 252, 180);
+    }
+
+    &-blue {
+        background-color: rgb(180, 241, 252);
+    }
+}
+
+.h-red {
+
+        fill: rgb(255, 152, 152);
+}
+
+.h-blue {
+
+    fill: rgb(180, 241, 252);
+}
+
+.h-yellow{
+
+    fill: rgb(250, 252, 180);
+}

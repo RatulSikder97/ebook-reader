@@ -28,7 +28,8 @@
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
               "xmldom",
-              "event-emitter"
+              "event-emitter",
+              "marks-pane"
            ],
             "assets": [
               "src/favicon.ico",

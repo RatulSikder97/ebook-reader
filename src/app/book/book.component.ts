@@ -12,6 +12,9 @@ export class BookComponent implements OnInit {
   bookMark!: any[];
   bookmarkLength ;
   Location;
+  hIndex: string[] = [];
+  hClass: string = '';
+  hColors = ['red', 'yellow', 'blue']
   constructor(
     private bookService: BookService
   ) { }
@@ -23,8 +26,14 @@ export class BookComponent implements OnInit {
     console.log(this.bookmarkString)
     this.bookMark = JSON.parse(this.bookmarkString) ?? [];
     this.bookmarkLength = this.bookMark.length
+
+    this.hClass = 'h-yellow';
+
+    
    
   }
+
+  
 
   readBook(event) {
 
@@ -33,7 +42,7 @@ export class BookComponent implements OnInit {
     this.bookService.display()
     this.bookService.rendition.themes.default({
       '::selection': {
-        'background': 'rgba(255,255,0, 0.3)'
+        'background': 'rgba(0,255,0, 0.3)'
       },
       '.epubjs-hl' : {
         'fill': 'yellow', 'fill-opacity': '0.3', 'mix-blend-mode': 'multiply'
@@ -62,11 +71,29 @@ export class BookComponent implements OnInit {
       
     });
 
-   
+    this.bookService.rendition.on('selected', (cfi, data) => {
 
-    
+      this.bookService.rendition.annotations.highlight(cfi, {}, (e) => {
+        console.log("highlight clicked", e.target);
 
+      }, this.hClass);
+
+      
+      let cfiD: string = cfi;
+      this.hIndex.push(cfi)
+
+      
+    })
   
+  }
+
+  changeHColor(color) {
+    this.hClass = 'h-'+color
+  }
+
+  removeH(link) {
+    this.bookService.rendition.annotations.remove(link, "highlight")
+    this.hIndex = this.hIndex.filter(links => links !=link)
   }
 
   prevPage() {
