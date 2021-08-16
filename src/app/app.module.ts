@@ -15,16 +15,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-// firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyBozXuKzldrc83CdGYHyFW3OESOBTbHjdI",
-  authDomain: "e-book-8621b.firebaseapp.com",
-  projectId: "e-book-8621b",
-  storageBucket: "e-book-8621b.appspot.com",
-  messagingSenderId: "274765546967",
-  appId: "1:274765546967:web:edf9a8f67bda33e963b792"
-};
-
 @NgModule({
   declarations: [
     AppComponent
@@ -49,3 +39,7 @@ const firebaseConfig = {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+function firebaseConfig(firebaseConfig: any): any[] | import("@angular/core").Type<any> | import("@angular/core").ModuleWithProviders<{}> {
+  throw new Error('Function not implemented.');
+}
+
