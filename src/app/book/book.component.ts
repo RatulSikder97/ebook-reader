@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import Section from 'epubjs/types/section';
 import { BookService } from '../services/book.service';
+import { HighlightComponent } from './highlight/highlight.component';
 
 @Component({
   selector: 'app-book',
@@ -16,7 +18,8 @@ export class BookComponent implements OnInit {
   hClass: string = '';
   hColors = ['red', 'yellow', 'blue']
   constructor(
-    private bookService: BookService
+    private bookService: BookService,
+    private bookDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -29,16 +32,16 @@ export class BookComponent implements OnInit {
 
     this.hClass = 'h-yellow';
 
-    
-   
+
+
   }
 
-  
 
+  cond: boolean = false;
   readBook(event) {
 
     this.bookService.openBook(event.target.files[0])
-    this.bookService.renderTo('book-view');
+    this.bookService.renderTo('viewer');
     this.bookService.display()
     this.bookService.rendition.themes.default({
       '::selection': {
@@ -53,7 +56,7 @@ export class BookComponent implements OnInit {
     this.bookService.rendition.on('relocated', (location) =>{
       //console.log(this.bookService.rendition)
       localStorage.setItem('currentLoc', JSON.stringify( location.start.cfi))
-      localStorage.setItem('currentPage', JSON.stringify( location.start.displayed.page)) 
+      localStorage.setItem('currentPage', JSON.stringify( location.start.displayed.page))
 
       this.bookService.book.loaded.metadata.then(val => {
         //console.log(val)
@@ -62,29 +65,52 @@ export class BookComponent implements OnInit {
     });
 
     this.bookService.rendition.on('rendered', (section: Section) => {
-    
+
       // Update current navItem by section
       const navItem = this.bookService.book.navigation.get(section.href);
 
       console.log(navItem)
       localStorage.setItem('currSec', navItem.label);
-      
+
+    });
+
+    this.bookService.rendition.on("layout", (layout) => {
+      let viewer = document.getElementById("viewer");
+
+      if (layout.spread) {
+        this.cond = false;
+      } else {
+        this.cond = true;
+      }
     });
 
     this.bookService.rendition.on('selected', (cfi, data) => {
 
-      this.bookService.rendition.annotations.highlight(cfi, {}, (e) => {
-        console.log("highlight clicked", e.target);
+      // console.log(data.window.getSelection().toString())
+      // data.window.getSelection().then().
+      let me = data.window.getSelection().toString()
 
-      }, this.hClass);
+      if(data.window.getSelection().toString()) {
+        console.log(data.window.getSelection().toString())
+        this.bookDialog.open(HighlightComponent, { data: {
+          text: me
+        }})
 
-      
+      }
+
+
+      // this.bookService.rendition.annotations.highlight(cfi, {}, (e) => {
+      //   console.log("highlight clicked", e.target);
+
+      // }, this.hClass);
+
+
       let cfiD: string = cfi;
       this.hIndex.push(cfi)
 
-      
+
     })
-  
+
   }
 
   changeHColor(color) {
@@ -97,11 +123,11 @@ export class BookComponent implements OnInit {
   }
 
   prevPage() {
-    this.bookService.rendition.prev(); 
+    this.bookService.rendition.prev();
   }
 
   nextPage() {
-    this.bookService.rendition.next(); 
+    this.bookService.rendition.next();
 
   }
 
@@ -115,14 +141,24 @@ export class BookComponent implements OnInit {
       this.bookMark.push({name: linkName, link: l});
     }
 
-  
+
     localStorage.setItem('bookmark',  JSON.stringify(this.bookMark))
     //console.log(this.bookService.book.pageList.cfiFromPage(3))
-    
+
   }
 
   goToBookMark(link) {
     this.bookService.display(link)
+  }
+
+  onRightClick(e) {
+    e.preventDefault()
+    console.log(e.clientX)
+
+    this.bookDialog.open(HighlightComponent, { position: {top: e.clientY+'px', left:e.clientX+'px'}})
+
+    // y
+
   }
 
 }

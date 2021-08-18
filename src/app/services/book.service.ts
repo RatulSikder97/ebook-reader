@@ -11,7 +11,7 @@ export class BookService {
   rendition!: Rendition;
 
   constructor() {
-    
+
    }
 
    openBook(input: any, what?: string) {
@@ -24,8 +24,13 @@ export class BookService {
   }
 
   renderTo(element: string, options?: RenditionOptions) {
-    this.rendition = this.book.renderTo(element, { height: 600 , width: 500});
+    this.rendition = this.book.renderTo(element, {
+      manager: "continuous",
+      flow: "paginated",
+      width: "100%",
+      height: '80vh',
+    });
   }
 
-  
+
 }

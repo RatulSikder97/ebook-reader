@@ -17,10 +17,14 @@
 </ul>
 
 <div class="book">
-    <button id="prev" (click)="prevPage()">Prev</button>
+    <!-- <button id="prev" (click)="prevPage()">Prev</button>
     <button id="next" (click)="nextPage()">Next</button>
-    <div id="book-view"></div>
-    
+    <div id="viewer"></div> -->
+
+  <div id="viewer" class="spreads" [class.single]="cond" (contextmenu)="onRightClick($event)"></div>
+  <div id="prev" class="arrow" (click)="prevPage()" >‹</div>
+  <div id="next" class="arrow" (click)="nextPage()">›</div>
+
 </div>
 
 <div class="highlisht-color">

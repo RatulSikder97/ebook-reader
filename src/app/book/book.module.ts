@@ -6,14 +6,20 @@ import { StoreModule } from '@ngrx/store';
 import * as fromBook from './state/book.reducer';
 
 
+import {MatDialogModule} from '@angular/material/dialog';
+import { HighlightComponent } from './highlight/highlight.component';
+
 
 @NgModule({
   declarations: [
-    BookComponent
+    BookComponent,
+    HighlightComponent
   ],
   imports: [
     CommonModule,
     BookRoutingModule,
+    MatDialogModule,
+
     StoreModule.forFeature(fromBook.booksFeatureKey, fromBook.reducer)
   ]
 })
